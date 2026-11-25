@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LinguaLoop — Practice English Conversation with AI</title>
+<meta name="description" content="Practice real English conversation with an AI partner. Quick grammar fixes run privately on your device with Gemini Nano; full conversation runs in the cloud with Gemini — powered by Firebase AI Logic hybrid inference." />
+<link rel="stylesheet" href="./styles.css" />
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js",
+    "firebase/ai": "https://www.gstatic.com/firebasejs/13.0.0/firebase-ai.js",
+    "firebase/app-check": "https://www.gstatic.com/firebasejs/13.0.0/firebase-app-check.js"
+  }
+}
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◐</span>
+      <div>
+        <strong>LinguaLoop</strong>
+        <span class="tagline">English conversation coach</span>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="pill pill-hybrid">Hybrid AI</span>
+      <span class="pill" id="engineBadge">On-device + Cloud</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="demoBanner" class="demo-banner" hidden>
+    <strong>Demo Mode.</strong>
+    Add your Firebase web config in <code>firebase-config.js</code> to enable live AI.
+    The conversation below uses built-in sample replies so you can explore the interface.
+  </div>
+
+  <section class="hero">
+    <h1>Practice English by <span class="accent">actually speaking it</span>.</h1>
+    <p class="lede">Chat with an AI partner in real situations — ordering food, a job interview, small talk. Get instant grammar fixes and a natural reply, every turn.</p>
+  </section>
+
+  <section class="card">
+    <div class="scenarios">
+      <span class="samples-label">Pick a situation:</span>
+      <button class="chip chip-active" data-scenario="food" type="button">🍽️ Ordering food</button>
+      <button class="chip" data-scenario="interview" type="button">💼 Job interview</button>
+      <button class="chip" data-scenario="smalltalk" type="button">💬 Small talk</button>
+      <button class="chip" data-scenario="travel" type="button">✈️ Travel &amp; hotel</button>
+      <button class="chip" data-scenario="directions" type="button">🗺️ Asking directions</button>
+    </div>
+    <p class="hint" id="scenarioDesc"></p>
+
+    <div class="chat-wrap">
+      <div id="chat" class="chat" aria-live="polite"></div>
+      <div id="typing" class="typing" hidden>AI is typing…</div>
+    </div>
+
+    <div class="composer">
+      <button class="btn btn-icon" id="micBtn" type="button" title="Speak" hidden>🎙️</button>
+      <input id="msgInput" type="text" placeholder="Type your reply in English…" autocomplete="off" />
+      <button class="btn btn-primary" id="sendBtn" type="button">Send</button>
+    </div>
+    <div class="toggles">
+      <label class="toggle"><input type="checkbox" id="speakToggle" /> Read replies aloud</label>
+      <button class="btn btn-ghost btn-small" id="newBtn" type="button">New conversation</button>
+    </div>
+
+    <h2 class="section-title">Grammar fixes <span class="mini-badge" id="grammarBadge" hidden></span></h2>
+    <div id="grammarPanel" class="grammar">
+      <p class="placeholder">Your grammar fixes will appear here after each message.</p>
+    </div>
+    <p class="hint">Quick grammar checks run <strong>on-device</strong> with Gemini Nano (private, fast). The full conversation runs <strong>in the cloud</strong> with Gemini, because on-device inference does not support multi-turn chat — Firebase AI Logic handles the split for you.</p>
+  </section>
+
+  <section class="how">
+    <h2>How hybrid inference works here</h2>
+    <div class="how-grid">
+      <article class="how-card">
+        <h3>On-device · grammar</h3>
+        <p>Each message gets a quick, single-turn grammar check on your device with Gemini Nano. No audio or text leaves your device for this step.</p>
+      </article>
+      <article class="how-card">
+        <h3>Cloud · conversation</h3>
+        <p>The conversation itself is multi-turn, so it runs in the cloud with Gemini — the larger model keeps the roleplay natural and remembers the context.</p>
+      </article>
+      <article class="how-card">
+        <h3>One SDK, both jobs</h3>
+        <p>Firebase AI Logic routes each request to the right place with a single SDK, and tells you where every answer came from.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    Built with <strong>Firebase AI Logic</strong> — Gemini Nano on-device + Gemini in the cloud.
+    Free to use. Practice as much as you like.
+  </div>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
