@@ -172,7 +172,7 @@ async function checkGrammarLive(text) {
   const model = getGenerativeModel(ai, {
     mode: InferenceMode.PREFER_ON_DEVICE,
     inCloudParams: {
-      model: "gemini-3.8-flash",
+      model: "gemini-3.5-flash-lite",
       generationConfig: { maxOutputTokens: 200, temperature: 0.2 },
     },
     onDeviceParams: {
@@ -210,7 +210,7 @@ async function getReplyLive(userText) {
   const model = getGenerativeModel(ai, {
     mode: InferenceMode.ONLY_IN_CLOUD,
     inCloudParams: {
-      model: "gemini-3.8-flash",
+      model: "gemini-3.5-flash-lite",
       generationConfig: { maxOutputTokens: 300, temperature: 0.8 },
     },
   });
