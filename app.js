@@ -165,6 +165,17 @@ function initFirebase() {
 // ---------------------------------------------------------------------------
 // AI calls
 // ---------------------------------------------------------------------------
+// The Firebase AI Logic SDK returns inferenceSource as lowercase
+// snake_case ("in_cloud" / "on_device"), not the uppercase enum names
+// ("IN_CLOUD" / "ON_DEVICE"). Normalize it to the app's canonical form so
+// the source labels below match a live response.
+function normalizeSource(value) {
+  const v = String(value || "in_cloud").toUpperCase().replace(/-/g, "_");
+  if (v === "ON_DEVICE") return "ON_DEVICE";
+  if (v === "IN_CLOUD") return "IN_CLOUD";
+  return v;
+}
+
 // Single-turn grammar check — runs on-device when possible.
 async function checkGrammarLive(text) {
   // NOTE: getGenerativeModel is called here, on the Send click, because the
@@ -196,7 +207,7 @@ async function checkGrammarLive(text) {
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const raw = response.text();
-  const source = response.inferenceSource || "IN_CLOUD";
+  const source = normalizeSource(response.inferenceSource);
   const mCorr = raw.match(/Corrected:\s*(.+)/i);
   const mNote = raw.match(/Notes:\s*(.+)/i);
   const corrected = mCorr ? mCorr[1].trim() : null;
@@ -225,7 +236,7 @@ async function getReplyLive(userText) {
     `Your reply (1-3 sentences, in character, with a follow-up question):`;
   const result = await model.generateContent(prompt);
   const response = await result.response;
-  return { text: response.text().trim(), source: response.inferenceSource || "IN_CLOUD" };
+  return { text: response.text().trim(), source: normalizeSource(response.inferenceSource) };
 }
 
 // ---------------------------------------------------------------------------
